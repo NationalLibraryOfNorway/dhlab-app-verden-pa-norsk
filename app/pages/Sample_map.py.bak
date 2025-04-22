@@ -1,0 +1,33 @@
+import streamlit as st
+import folium
+from folium.plugins import MarkerCluster
+from streamlit_folium import st_folium
+from verden_pa_norsk.streamlit_tools import load_database
+
+
+def main():
+    con = load_database("data/sample.duckdb")
+
+    st.title("Kart")
+
+    df = con.sql("SELECT * FROM sample").to_df()
+
+    m = folium.Map(location=[60.3913, 5.3221], zoom_start=5)
+
+    # Initialize marker cluster
+    marker_cluster = MarkerCluster().add_to(m)
+
+    # Add points to the marker cluster
+    for index, row in df.iterrows():
+        if row["point"] is not None:
+            folium.Marker(
+                location=row["point"][:2],
+                popup=f"{row['title']}<br/>{row['publisher']}<br/>{row['year']}",
+            ).add_to(marker_cluster)
+
+    st_folium(m, use_container_width=True)
+    # st_folium(m)
+
+
+if __name__ == "__main__":
+    main()
