@@ -1,6 +1,6 @@
 # Verden på norsk
 
-This repo contains the webapp and database (DuckDB) for __Verden på norsk__.
+This repo contains the webapp and database (DuckDB) for __Verden på norsk__. Library metadata is sourced from the Open Library catalog and from the National Library of Norway, both in the public domain (CC-0).
 
 Build with Docker:
 
